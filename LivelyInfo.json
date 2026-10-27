@@ -1,0 +1,21 @@
+{
+  "AppVersion": "2.0.0.0",
+  "Title": "Petal OS \u00b7 Retro Girly",
+  "Thumbnail": "thumbnail.png",
+  "Preview": null,
+  "Desc": "A pastel pixel desktop with clock, calendar, notes and personalisable shortcut zones.",
+  "Author": "Petal OS",
+  "License": "MIT",
+  "Contact": null,
+  "Type": 1,
+  "FileName": "index.html",
+  "Arguments": null,
+  "IsAbsolutePath": false,
+  "Version": 1,
+  "Tags": [
+    "retro",
+    "pink",
+    "interactive",
+    "calendar"
+  ]
+}

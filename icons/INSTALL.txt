@@ -1,0 +1,19 @@
+PETAL OS ICON STARTER PACK
+
+8 original designs: folder, computer, heart, flower, music, recycle,
+documents, pictures.
+
+.ico: Windows multi-resolution icons (16 to 256 pixels)
+.png: Transparent 256-pixel previews
+.svg: Editable vector source
+
+Extract to a permanent folder before using. Windows remembers icon paths.
+
+SHORTCUT: Right-click > Properties > Shortcut > Change Icon > Browse.
+FOLDER: Right-click > Properties > Customize > Change Icon > Browse.
+THIS PC / RECYCLE BIN: Windows Settings > Personalization > Themes >
+Desktop icon settings > select icon > Change Icon.
+
+Choose one of the .ico files. Apply changes. Menu labels vary by Windows version.
+These files do not automatically change icons or alter Windows settings.
+License: MIT, see the parent package LICENSE.txt.

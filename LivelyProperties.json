@@ -1,0 +1,79 @@
+{
+  "theme": {
+    "type": "dropdown",
+    "text": "Palette",
+    "value": 0,
+    "items": [
+      "Rose milk",
+      "Lavender",
+      "Mint tea"
+    ]
+  },
+  "accent": {
+    "type": "color",
+    "text": "Accent color",
+    "value": "#b64e71"
+  },
+  "background": {
+    "type": "dropdown",
+    "text": "Background",
+    "value": 0,
+    "items": [
+      "Picnic gingham",
+      "Polka-dot daydream",
+      "Cloud nine",
+      "Just the color",
+      "Custom image"
+    ]
+  },
+  "customBackground": {
+    "type": "folderDropdown",
+    "text": "Custom background image (select Background: Custom image)",
+    "value": null,
+    "filter": "*.png|*.jpg|*.jpeg|*.webp",
+    "folder": "backgrounds"
+  },
+  "label1": {
+    "type": "textbox",
+    "text": "Zone 1 label",
+    "value": "daily little things"
+  },
+  "label2": {
+    "type": "textbox",
+    "text": "Zone 2 label",
+    "value": "dreams in progress"
+  },
+  "label3": {
+    "type": "textbox",
+    "text": "Zone 3 label",
+    "value": "just for fun"
+  },
+  "motion": {
+    "type": "checkbox",
+    "text": "Animated decorations (respects reduced motion)",
+    "value": true
+  },
+  "sound": {
+    "type": "checkbox",
+    "text": "Soft click sounds (requires wallpaper click)",
+    "value": false
+  },
+  "hour24": {
+    "type": "checkbox",
+    "text": "24-hour clock",
+    "value": false
+  },
+  "showNotes": {
+    "type": "checkbox",
+    "text": "Show calendar note editor",
+    "value": true
+  },
+  "volume": {
+    "type": "slider",
+    "text": "Click sound volume",
+    "min": 0,
+    "max": 100,
+    "step": 1,
+    "value": 20
+  }
+}

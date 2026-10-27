@@ -1,0 +1,16 @@
+PETAL OS / Retro Girly interactive wallpaper prototype
+
+1. Extract the entire offline ZIP.
+2. Open index.html for the interactive browser preview.
+3. Open README.html for Lively installation, icons and GitHub Pages instructions.
+4. Import the separate Petal-OS-Lively.zip into Lively, or add index.html from
+   a permanent extracted folder.
+
+Use Lively Library > right-click wallpaper > Customise for persistent labels,
+colors and motion. Browser and Lively storage are separate.
+
+Eight matching Windows ICOs are in icons/, with PNG and SVG versions.
+No internet, API keys, installs or build tools are required by the wallpaper.
+Calendar notes are local only; export settings for a backup.
+
+TEST-RESULTS.txt records what was tested and what still needs checking in Lively.

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f6b8cc">
+  <title>Petal OS · Retro Girly Wallpaper</title>
+  <link rel="icon" href="icons/heart.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body data-background="gingham">
+  <div id="custom-bg" aria-hidden="true"></div>
+  <div class="decorations" aria-hidden="true">
+    <svg class="pixel heart h1" viewBox="0 0 16 14"><path d="M2 0h4v2h4V0h4v2h2v6h-2v2h-2v2h-2v2H6v-2H4v-2H2V8H0V2h2Z"/></svg>
+    <svg class="pixel heart h2" viewBox="0 0 16 14"><path d="M2 0h4v2h4V0h4v2h2v6h-2v2h-2v2h-2v2H6v-2H4v-2H2V8H0V2h2Z"/></svg>
+    <span class="spark s1">✦</span><span class="spark s2">✧</span><span class="spark s3">✦</span><span class="spark s4">✧</span>
+    <svg class="pixel bow" viewBox="0 0 32 24"><path d="M0 2h6v2h4v2h4v2h4V6h4V4h4V2h6v14h-6v-2h-4v-2h-2v4h2v6h-6v-8h-2v8H8v-6h2v-4H8v2H4v2H0Z"/></svg>
+  </div>
+  <header class="topbar"><span class="brand"><span aria-hidden="true">✿</span> petal<span class="os">OS</span></span><span class="top-caption">a little space to bloom</span><button id="open-settings" class="settings-button">✧ Personalise</button></header>
+  <main class="desktop">
+    <section class="left-column" aria-label="Clock and calendar">
+      <article class="window clock-window">
+        <div class="titlebar"><span>♡　a moment for you</span><span aria-hidden="true">—　□</span></div>
+        <div class="clock-content"><p class="eyebrow" id="greeting">HELLO, LOVELY</p><div class="clock-row"><time id="clock">00:00</time><span id="period">AM</span></div><p id="date">Loading date…</p><div class="clock-bottom"><span class="status-dot"></span> your own little corner of the world</div></div>
+      </article>
+      <article class="window calendar-window">
+        <div class="titlebar"><span>▦　little days, big dreams</span><span aria-hidden="true">□</span></div>
+        <div class="calendar-content"><div class="month-nav"><button id="prev-month" aria-label="Previous month">‹</button><h1 id="month-title"></h1><button id="next-month" aria-label="Next month">›</button></div>
+        <div class="weekdays" aria-hidden="true"><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span></div>
+        <div id="calendar" class="calendar" aria-label="Calendar dates"></div>
+        <div class="calendar-footer"><span><i class="status-dot"></i> today　·　dot = note</span><button id="today">Today ↗</button></div>
+        <form id="note-form"><label for="day-note" id="note-label">A little note</label><div class="note-row"><input id="day-note" maxlength="160" placeholder="Something to look forward to…"><button type="submit">Save</button></div></form>
+        </div>
+      </article>
+      <div class="mini-note"><span aria-hidden="true">✿</span><p>one thing at a time.<br><em>you’re doing just fine.</em></p></div>
+    </section>
+    <section class="zones" aria-label="Desktop shortcut zones">
+      <div class="zone zone-one"><div class="zone-tab"><span aria-hidden="true">♡</span><span id="zone1-label">daily little things</span></div><span class="zone-number" aria-hidden="true">01</span></div>
+      <div class="zone zone-two"><div class="zone-tab"><span aria-hidden="true">✧</span><span id="zone2-label">dreams in progress</span></div><span class="zone-number" aria-hidden="true">02</span></div>
+      <div class="zone zone-three"><div class="zone-tab"><span aria-hidden="true">✿</span><span id="zone3-label">just for fun</span></div><span class="zone-number" aria-hidden="true">03</span></div>
+      <p class="zone-tip">a home for your shortcuts <span aria-hidden="true">↗</span></p>
+    </section>
+  </main>
+  <footer class="bottom-bar"><span><span class="status-dot"></span> make yourself at home</span><div><button id="motion-shortcut" aria-pressed="true">✧ Motion on</button><button id="sound-shortcut" aria-pressed="false">♪ Sound off</button><button id="help-button" aria-label="Wallpaper help">?</button></div></footer>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <dialog id="settings" aria-labelledby="settings-title">
+    <div class="titlebar"><h2 id="settings-title">✧　make it yours</h2><button id="close-settings" aria-label="Close settings">×</button></div>
+    <div class="settings-content"><p class="intro">A tiny desktop, with a little more you.</p>
+      <fieldset><legend>01 / THE PALETTE</legend><div class="theme-buttons"><button data-theme="rose">🌷 Rose milk</button><button data-theme="lavender">✧ Lavender</button><button data-theme="mint">☘ Mint tea</button></div><label class="inline-label">Accent color <input id="accent" type="color" value="#b64e71"></label></fieldset>
+      <fieldset><legend>02 / THE WALLPAPER</legend><label>Background <select id="background"><option value="gingham">Picnic gingham</option><option value="dots">Polka-dot daydream</option><option value="clouds">Cloud nine</option><option value="plain">Just the color</option><option value="custom">My own image</option></select></label><label class="file-label">Choose your own image (PNG / JPG / WebP, up to 2 MB)<input id="image-upload" type="file" accept="image/png,image/jpeg,image/webp"></label></fieldset>
+      <fieldset><legend>03 / YOUR LITTLE CORNERS</legend><label>Zone 1 <input id="label1" maxlength="36"></label><label>Zone 2 <input id="label2" maxlength="36"></label><label>Zone 3 <input id="label3" maxlength="36"></label><p class="hint">Visual guides for your real Windows shortcuts. Drag your icons into these areas on the desktop.</p></fieldset>
+      <fieldset><legend>04 / THE LITTLE DETAILS</legend><label class="check"><input id="motion" type="checkbox"> Animated decorations</label><label class="check"><input id="sound" type="checkbox"> Soft click sounds (starts after a click)</label><label class="check"><input id="hour24" type="checkbox"> 24-hour clock</label><label class="check"><input id="show-notes" type="checkbox"> Show calendar note editor</label><label class="inline-label">Sound volume <input id="volume" type="range" min="0" max="100"></label></fieldset>
+      <div class="transfer"><button id="export">Export settings</button><label class="import-button">Import settings<input id="import" type="file" accept="application/json,.json"></label><button id="reset">Reset appearance</button></div><p class="hint" id="storage-status">Settings and calendar notes stay on this device.</p><p class="hint">In Lively, use Library → right-click wallpaper → Customise for reliable persistent controls. Browser and Lively settings are separate.</p>
+    </div>
+  </dialog>
+  <dialog id="help" aria-labelledby="help-title"><div class="titlebar"><h2 id="help-title">♡　a little help</h2><button id="close-help" aria-label="Close help">×</button></div><div class="settings-content"><p>Select a calendar day to write a note. Saving an empty note deletes it. Personalise changes your colors, labels, background and sound.</p><p>The three zones are visual guides, not folders. Windows still manages your desktop files and icons.</p><p>In Lively, mouse input depends on its interaction settings and the desktop. Real icons and other windows can cover wallpaper controls. Keyboard input is off by default; enabling it can hide desktop icons.</p><p>Use Lively’s <strong>Customise</strong> panel for labels and appearance. For typing notes or choosing files, the browser preview is the easiest option. It has separate local storage; export/import can transfer your settings when file selection is available.</p><p>Sound is a quiet click chime, off by default. Browsers may require a click before audio plays. Reduced-motion preferences are respected.</p><a href="README.html" target="_blank" rel="noopener">Open the setup & deployment guide ↗</a></div></dialog>
+</body>
+</html>

@@ -1,0 +1,73 @@
+PETAL OS / Verification report
+Date: October 26, 2026 (America/Los_Angeles)
+
+Environment: Chromium through Playwright CLI on Windows.
+Browser testing used a local HTTP preview and a direct file URL with
+networking disabled. No external requests were observed on reload.
+
+RESULT: 40 browser assertions passed. JavaScript syntax check passed.
+Visual review: 1440x1000, 1366x768, 1920x1080 and 390px mobile preview,
+plus the settings panel and icon contact sheet. Desktop layouts fit the
+viewport at the tested sizes; mobile preview scrolls vertically.
+
+Passed checks:
+PASS Zone label updates
+PASS Background changes
+PASS Motion pauses
+PASS 24-hour clock
+PASS Sound toggle
+PASS Appearance persists after reload
+PASS Calendar saves date note
+PASS Month navigation
+PASS Calendar note persists after reload
+PASS Empty note deletes
+PASS Today selects current date
+PASS Custom image loads
+PASS Settings export/import round trip
+PASS Malformed import preserves settings
+PASS Lively textbox callback
+PASS Lively folder background callback
+PASS Lively background choice overrides image
+PASS 1366 × 768 desktop fits viewport
+PASS 1920 × 1080 desktop fits viewport
+PASS 390px responsive preview has no horizontal overflow
+PASS Reduced motion honored
+PASS No JavaScript errors
+PASS Leap-year February has 29 days
+PASS Live clock advances across midnight
+PASS Live date advances across midnight
+PASS Calendar today marker advances across midnight
+PASS Today handles year rollover
+PASS Previous month crosses January to December
+PASS Offline file URL starts clock
+PASS Offline stylesheet loads
+PASS Offline file URL persists edits
+PASS Lively Windows path normalization
+PASS Lively filename-only image path
+PASS Lively image path rejects parent traversal
+PASS Labels display text safely
+PASS Lively accent control
+PASS Lively note visibility control
+PASS Lively 24-hour control
+PASS Lively sound control
+PASS No external network requests
+
+Package checks:
+- Every local HTML asset/link target exists.
+- Lively metadata points to index.html and thumbnail.png; web type is 1.
+- Lively property names match implemented callback controls.
+- 8 ICO files contain all advertised Windows sizes.
+- Both ZIPs pass CRC validation and match the final source bytes.
+- SHA256SUMS.txt records final archive hashes.
+
+Limits:
+- Actual Lively ZIP import, native Customise UI, input routing, audio output,
+  per-monitor settings and player performance were not tested in Lively.
+  Property callbacks were exercised directly in Chromium.
+- Sound toggle and audio code executed without JavaScript errors; audible
+  output and player autoplay policy need a listening check in Lively.
+- GitHub Pages was not deployed: no suitable wallpaper repository was
+  identified or chosen. The included guide explains root/subfolder hosting.
+- Browser, file URL and Lively storage are independent. No sync is claimed.
+- All designs are original geometric pixel artwork. No external asset or
+  online service is required to run the extracted wallpaper.
