@@ -1,114 +1,42 @@
-PETAL OS / Verification report
-Date: October 26, 2026 (America/Los_Angeles)
+PETAL OS / Standalone desktop prototype 0.2
+Verified October 26, 2026 (America/Los_Angeles)
 
-Environment: Chromium through Playwright CLI on Windows.
-Browser testing used a local HTTP preview and a direct file URL with
-networking disabled. No external requests were observed on reload.
+Native Windows test: Microsoft Windows NT 10.0.19045.0 / WebView2 155.0.4283.62
+PASS Own EXE initializes WebView2 and renders four zones
+PASS Wallpaper HWND is parented to Explorer WorkerW behind desktop icons
+PASS Native wallpaper window is visible
+PASS Native wallpaper fits the display without scrollbars
+PASS Editor changes synchronize live to native wallpaper renderer
+PASS Native settings persisted to disk
+PASS Stop removes wallpaper HWNDs and restores the normal desktop
 
-RESULT: 56 browser assertions passed. JavaScript syntax check passed.
-Visual review: 1440x1000, 1366x768, 1920x1080 and 390px mobile preview,
-plus the settings panel and icon contact sheet. Desktop layouts fit the
-viewport at the tested sizes; mobile preview scrolls vertically.
+Browser / native protocol checks:
+PASS Four browser-preview panels
+PASS Preview offers our Windows app
+PASS Browser label persistence
+PASS Calendar notes persist
+PASS New native profile sends initial settings
+PASS Incoming native settings update the renderer
+PASS Native broadcast does not create a feedback loop
+PASS Editor changes post structured state to our app
+PASS Wallpaper directs editing to our editor
+PASS Wallpaper receives live state
+PASS Wallpaper never posts editor messages
 
-Passed checks:
-PASS Zone label updates
-PASS Background changes
-PASS Motion pauses
-PASS 24-hour clock
-PASS Sound toggle
-PASS Appearance persists after reload
-PASS Calendar saves date note
-PASS Month navigation
-PASS Calendar note persists after reload
-PASS Empty note deletes
-PASS Today selects current date
-PASS Custom image loads
-PASS Settings export/import round trip
-PASS Malformed import preserves settings
-PASS Lively textbox callback
-PASS Lively folder background callback
-PASS Lively background choice overrides image
-PASS 1366 × 768 desktop fits viewport
-PASS 1920 × 1080 desktop fits viewport
-PASS 390px responsive preview has no horizontal overflow
-PASS Reduced motion honored
-PASS No JavaScript errors
-PASS Leap-year February has 29 days
-PASS Live clock advances across midnight
-PASS Live date advances across midnight
-PASS Calendar today marker advances across midnight
-PASS Today handles year rollover
-PASS Previous month crosses January to December
-PASS Offline file URL starts clock
-PASS Offline stylesheet loads
-PASS Offline file URL persists edits
-PASS Lively Windows path normalization
-PASS Lively filename-only image path
-PASS Lively image path rejects parent traversal
-PASS Labels display text safely
-PASS Lively accent control
-PASS Lively note visibility control
-PASS Lively 24-hour control
-PASS Lively sound control
-PASS No external network requests
-PASS Public GitHub Pages responds HTTP 200
-PASS Published wallpaper renders
-PASS Hosted labels editable
-PASS Hosted settings persist
-PASS Hosted calendar note saves
-PASS Published asset: style.css
-PASS Published asset: app.js
-PASS Published asset: LivelyInfo.json
-PASS Published asset: LivelyProperties.json
-PASS Published asset: icons/heart.ico
-PASS Published asset: backgrounds/rose-gingham.png
-PASS Published asset: README.html
-PASS Published asset: downloads/Petal-OS-Offline.zip
-PASS Published asset: downloads/Petal-OS-Lively.zip
-PASS Published asset: downloads/Petal-OS-Icons.zip
-PASS No hosted JavaScript errors
+Our host was compiled as a Windows x64 EXE with the Windows Framework compiler.
+The native test creates a real Explorer-background child window and exercises
+our own renderer and IPC. It then removes its wallpaper window and exits.
+It did not change the static Windows wallpaper or install startup entries.
+The native renderer was visually reviewed at its actual 1600x900 viewport.
 
-Package checks:
-- Every local HTML asset/link target exists.
-- Lively metadata points to index.html and thumbnail.png; web type is 1.
-- Lively property names match implemented callback controls.
-- 8 ICO files contain all advertised Windows sizes.
-- Both ZIPs pass CRC validation and match the final source bytes.
-- SHA256SUMS.txt records final archive hashes.
+Limits: verified on this single-display Windows 10 setup only. Other Windows
+versions, multiple monitors, Explorer restart recovery and sleep/resume still
+need testing. WorkerW is an undocumented Explorer convention. No direct
+desktop-input forwarding, start-at-login setting or automatic fullscreen/
+battery pause policy is implemented. Editing is through our own app window.
+Audio is optional editor click feedback; audible output was not measured.
 
-Limits:
-- Actual Lively ZIP import, native Customise UI, input routing, audio output,
-  per-monitor settings and player performance were not tested in Lively.
-  Property callbacks were exercised directly in Chromium.
-- Sound toggle and audio code executed without JavaScript errors; audible
-  output and player autoplay policy need a listening check in Lively.
-- GitHub Pages is published at https://hkcm91.github.io/retro-girly-wallpaper/
-  Source: https://github.com/hkcm91/retro-girly-wallpaper
-  Public controls, persistence, calendar notes, assets and downloads passed
-  16 additional assertions. The original local suite has 40 assertions.
-- Browser, file URL and Lively storage are independent. No sync is claimed.
-- All designs are original geometric pixel artwork. No external asset or
-  online service is required to run the extracted wallpaper.
-
-FOUR-UP UPDATE / Current revision
-The 56 assertions above are the original baseline. The four-zone update
-adds the following focused browser checks:
-PASS Four shortcut zones render
-PASS 2×2 zone arrangement at 1440px
-PASS Equal panel sizes at 1440px
-PASS Fits viewport at 1440px
-PASS 2×2 zone arrangement at 1366px
-PASS Equal panel sizes at 1366px
-PASS Fits viewport at 1366px
-PASS 2×2 zone arrangement at 1920px
-PASS Equal panel sizes at 1920px
-PASS Fits viewport at 1920px
-PASS 2×2 zone arrangement at 390px
-PASS Equal panel sizes at 390px
-PASS Fits viewport at 390px
-PASS Fourth label persists after reload
-PASS Fourth label exports and imports
-PASS Older exports receive fourth-label default
-PASS Older exports retain existing labels
-PASS Fourth Lively label callback works
-PASS No JavaScript errors in four-up layout
+WebView2 is Microsoft's shared renderer, not a third-party wallpaper host.
+The app needs WebView2 Runtime and .NET Framework 4.8 installed. No Lively
+dependency remains in this desktop build. Our code and artwork are MIT;
+Microsoft SDK binary license and notice files accompany the app.

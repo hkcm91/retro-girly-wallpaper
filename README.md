@@ -1,47 +1,69 @@
-# Petal OS · Retro Girly Wallpaper
+# Petal OS · Our Windows wallpaper app
 
-A little space to bloom: a self-contained interactive Windows wallpaper for Lively Wallpaper, with a browser preview and original matching pixel icons.
+Petal OS is our own standalone Windows wallpaper app. It includes a native desktop host, an editor, tray controls, and the retro pastel four-panel design. **Lively is not required.**
 
-![Petal OS desktop](preview.png)
+![Our native wallpaper renderer](desktop-preview.png)
 
-[Open the browser preview](https://hkcm91.github.io/retro-girly-wallpaper/) · [Installation and setup guide](https://hkcm91.github.io/retro-girly-wallpaper/README.html)
+## Run it
 
-## Download
+1. [Download Petal-OS-Desktop.zip](https://hkcm91.github.io/retro-girly-wallpaper/downloads/Petal-OS-Desktop.zip).
+2. Extract the complete ZIP, keeping its files together.
+3. Run **PetalOS.exe**, choose a display, and click **Apply wallpaper**.
+4. Use **Personalise** and the calendar in our Desktop Studio editor. Edits appear live on the wallpaper.
+5. Close the editor to keep it in the tray. Double-click the tray icon to reopen it. **Stop wallpaper** restores your normal background; **Exit** stops and closes Petal OS.
 
-- [Offline package](downloads/Petal-OS-Offline.zip): extract everything and open `index.html` in Edge or Chrome.
-- [Lively import package](downloads/Petal-OS-Lively.zip): import the ZIP in Lively, or add `index.html` from a permanent extracted folder.
-- [Matching icon pack](downloads/Petal-OS-Icons.zip): eight Windows ICO designs, plus transparent PNGs and editable SVGs.
+Windows x64, .NET Framework 4.8 and Edge WebView2 Runtime are required. These were already installed on the test PC. No separate wallpaper app, account, API key or administrator privileges are required. The portable app is unsigned. If needed, get the shared renderer from [Microsoft WebView2](https://developer.microsoft.com/microsoft-edge/webview2/).
+
+## Downloads and preview
+
+- [Windows desktop app](downloads/Petal-OS-Desktop.zip)
+- [Complete editable source ZIP](downloads/Petal-OS-Source.zip)
+- [Browser-only offline ZIP](downloads/Petal-OS-Offline.zip)
+- [Matching Windows icon pack](downloads/Petal-OS-Icons.zip)
 - [Checksums](downloads/SHA256SUMS.txt)
+- [Browser design preview](https://hkcm91.github.io/retro-girly-wallpaper/?v=3)
+- [Full setup guide](https://hkcm91.github.io/retro-girly-wallpaper/README.html)
+
+The Pages site previews the design. A website alone cannot set the Windows desktop wallpaper; our EXE provides that part.
 
 ## Features
 
-- Live local clock and date, with 12/24-hour display.
-- Interactive calendar with local date notes, month navigation and Today.
-- Animated pixel hearts, sparkles and a bow; motion toggle and reduced-motion support.
-- Four equal desktop zones in a 2×2 grid, each with an editable label.
-- Rose, lavender and mint palettes, custom accent color, four built-in background styles and image upload.
-- Optional soft click sounds with volume control; sound is off by default.
-- Local settings persistence and JSON export/import, including notes and uploaded image.
-- Native Lively Customise controls through `LivelyProperties.json`.
+- Our own Windows wallpaper host, editor, tray menu and display selector.
+- Four equal shortcut zones in a 2×2 grid, each with an editable label.
+- Live local clock/date and calendar with local notes.
+- Pixel decorations, motion control and reduced-motion support.
+- Three palettes, accent colors, background styles and custom images.
+- Optional editor click sounds, local persistence and export/import.
+- Eight original pixel icons in ICO, PNG and SVG.
 
-No external fonts, libraries, trackers, accounts, API keys or build tools are required. The extracted package runs without internet. The hosted preview needs internet on first visit; it does not claim a service-worker offline cache.
+Settings live in `%LocalAppData%\PetalOS\settings.json`. Browser preview settings are separate; Export / Import transfers them. The extracted app runs locally without internet once its prerequisites are installed.
 
-## Lively input limitations
+## Interaction and prototype scope
 
-The zones are visual guides for real Windows shortcuts; the webpage does not manage files or replace Explorer. Windows icons and windows can cover wallpaper controls. Lively enables mouse input by default, but desktop routing and pickers can behave differently from a normal browser.
+The wallpaper runs behind Windows icons. For now, interact through our **own editor window**. We do not capture global mouse or keyboard input or hide desktop icons. The panels guide shortcut placement; they are not real folders.
 
-Use **Library → right-click wallpaper → Customise** for reliable label, color and motion settings. Keyboard input is off by default; enabling it can hide desktop icons. Browser, local-file and Lively storage are independent. Browser changes are not written back to Lively's Customise properties.
+The host uses Explorer's undocumented WorkerW background-window convention. It was verified on a single-display Windows 10 x64 setup with WebView2 155. Windows 11, other desktop customizations, multiple displays, Explorer recovery and sleep/resume need wider testing. If attachment fails, the wallpaper stops and our editor stays available. Automatic startup and fullscreen/battery pause policies are not implemented yet.
 
-See the [official Lively interaction guide](https://github.com/rocksdanister/lively/wiki/Web-Guide-IV-:-Interaction) and the included [full guide](README.html).
+## Build
+
+Native source: [`desktop/Program.cs`](desktop/Program.cs).
+
+On Windows with .NET Framework 4.8 and PowerShell:
+
+```powershell
+.\desktop\build.ps1 -WebSource $PWD -OutputPath .\build\PetalOS
+```
+
+The script uses the Windows Framework compiler and a pinned Microsoft WebView2 SDK package. It checks the local NuGet cache first; otherwise it downloads the package into the source's dependencies folder. The compiled app does not require the SDK or build tools.
+
+The source ZIP includes the web assets, so `build.ps1` can also run with its default arguments. See [`desktop/README.txt`](desktop/README.txt).
 
 ## Verification
 
-The original baseline passed 40 local browser assertions and 16 public-preview assertions, including persistence, settings transfer, offline file loading, midnight/year rollover, leap day, responsive layouts and Lively callback handling. The four-up update passed 19 focused checks for equal 2×2 panels, responsive sizing, the fourth label, old exports and Lively callbacks. ZIP integrity and icon resolutions were checked. Actual Lively import, desktop input routing and audible output still require a check in Lively. Details: [TEST-RESULTS.txt](TEST-RESULTS.txt).
+**Seven real native checks passed:** our EXE and WebView2 loaded the design; the visible wallpaper HWND attached to Explorer's background layer; it fit the screen; editor changes reached the wallpaper; settings saved; Stop removed the wallpaper HWNDs. The test then exited and left the normal desktop in place.
 
-## GitHub Pages
-
-This is a buildless static site. Publish `main` → `/(root)` using **Settings → Pages → Deploy from a branch**. All assets use relative paths and support a project subpath.
+Eleven focused browser/protocol checks passed, covering four panels, label and calendar persistence, native state updates and preventing feedback loops. All ZIPs passed integrity and source-byte checks. See [TEST-RESULTS.txt](TEST-RESULTS.txt).
 
 ## License
 
-[MIT](LICENSE.txt), including the original geometric pixel icon artwork. Lively is a separate product with its own license.
+Our code and original artwork: [MIT](LICENSE.txt). Microsoft's WebView2 binaries use the Microsoft license and notices included in the app's `licenses/` folder.

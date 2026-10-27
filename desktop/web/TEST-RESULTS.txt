@@ -1,0 +1,42 @@
+PETAL OS / Standalone desktop prototype 0.2
+Verified October 26, 2026 (America/Los_Angeles)
+
+Native Windows test: Microsoft Windows NT 10.0.19045.0 / WebView2 155.0.4283.62
+PASS Own EXE initializes WebView2 and renders four zones
+PASS Wallpaper HWND is parented to Explorer WorkerW behind desktop icons
+PASS Native wallpaper window is visible
+PASS Native wallpaper fits the display without scrollbars
+PASS Editor changes synchronize live to native wallpaper renderer
+PASS Native settings persisted to disk
+PASS Stop removes wallpaper HWNDs and restores the normal desktop
+
+Browser / native protocol checks:
+PASS Four browser-preview panels
+PASS Preview offers our Windows app
+PASS Browser label persistence
+PASS Calendar notes persist
+PASS New native profile sends initial settings
+PASS Incoming native settings update the renderer
+PASS Native broadcast does not create a feedback loop
+PASS Editor changes post structured state to our app
+PASS Wallpaper directs editing to our editor
+PASS Wallpaper receives live state
+PASS Wallpaper never posts editor messages
+
+Our host was compiled as a Windows x64 EXE with the Windows Framework compiler.
+The native test creates a real Explorer-background child window and exercises
+our own renderer and IPC. It then removes its wallpaper window and exits.
+It did not change the static Windows wallpaper or install startup entries.
+The native renderer was visually reviewed at its actual 1600x900 viewport.
+
+Limits: verified on this single-display Windows 10 setup only. Other Windows
+versions, multiple monitors, Explorer restart recovery and sleep/resume still
+need testing. WorkerW is an undocumented Explorer convention. No direct
+desktop-input forwarding, start-at-login setting or automatic fullscreen/
+battery pause policy is implemented. Editing is through our own app window.
+Audio is optional editor click feedback; audible output was not measured.
+
+WebView2 is Microsoft's shared renderer, not a third-party wallpaper host.
+The app needs WebView2 Runtime and .NET Framework 4.8 installed. No Lively
+dependency remains in this desktop build. Our code and artwork are MIT;
+Microsoft SDK binary license and notice files accompany the app.

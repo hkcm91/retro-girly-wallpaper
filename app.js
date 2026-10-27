@@ -2,6 +2,10 @@
 (() => {
   'use strict';
   const $ = id => document.getElementById(id);
+  const nativeHost = new URLSearchParams(location.search).get('host') === 'petal' && !!window.chrome?.webview;
+  const nativeEditor = nativeHost && new URLSearchParams(location.search).get('mode') === 'editor';
+  document.body.classList.toggle('host-native', nativeHost);
+  document.body.classList.toggle('host-wallpaper', nativeHost && !nativeEditor);
   const STORAGE_KEY = 'petal-os-v1';
   const defaults = {theme:'rose',accent:'#b64e71',background:'gingham',customImage:'',label1:'daily little things',label2:'dreams in progress',label3:'just for fun',label4:'sweet little extras',motion:!matchMedia('(prefers-reduced-motion: reduce)').matches,sound:false,hour24:false,showNotes:true,volume:20,notes:{}};
   const palettes = {
@@ -32,19 +36,19 @@
   let state;
   try {state = clean(JSON.parse(localStorage.getItem(STORAGE_KEY)));} catch {state = clean(null); storageOK = false;}
   let selected = new Date(), viewed = new Date(selected.getFullYear(),selected.getMonth(),1), lastDay = '', toastTimer, audio;
-  let livelyImage = '';
   const keyFor = date => `${String(date.getFullYear()).padStart(4,'0')}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
   function toast(message) { $('toast').textContent=message; $('toast').classList.add('visible'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>$('toast').classList.remove('visible'),3000); }
   function save() {
     try {localStorage.setItem(STORAGE_KEY,JSON.stringify(state)); storageOK=true;} catch {storageOK=false; toast('Storage unavailable or full. Export settings to keep a copy.');}
     $('storage-status').textContent = storageOK ? 'Saved on this device. Export a copy to transfer or back up.' : 'Storage unavailable or full. Export a copy before closing.';
+    if(nativeEditor) window.chrome.webview.postMessage({type:'settings',state});
   }
   function apply(sync = true) {
     const colors=palettes[state.theme];
     ['base','paper','soft','ink','line','shadow'].forEach((name,i)=>document.documentElement.style.setProperty('--'+name,colors[i]));
     document.documentElement.style.setProperty('--accent',state.accent);
     document.body.dataset.background=state.background;
-    const image = livelyImage || state.customImage;
+    const image = state.customImage;
     $('custom-bg').style.backgroundImage=state.background==='custom' && image ? `url("${image.replace(/["\\\n\r]/g,'')}")` : 'none';
     document.body.classList.toggle('paused',!state.motion);
     for(let i=1;i<=4;i++) $('zone'+i+'-label').textContent=state['label'+i];
@@ -112,7 +116,7 @@
   $('note-form').onsubmit=event=>{event.preventDefault();const value=$('day-note').value.trim();if(value)state.notes[keyFor(selected)]=value;else delete state.notes[keyFor(selected)];save();renderCalendar();toast(value?'A little memory saved ♡':'Note cleared');};
   document.querySelectorAll('[data-theme]').forEach(button=>button.onclick=()=>{state.theme=button.dataset.theme;state.accent=palettes[state.theme][6];apply();save();});
   for(const id of ['accent','label1','label2','label3','label4','volume']) $(id).addEventListener('input',()=>{state[id]=id==='volume'?Number($(id).value):$(id).value;apply(false);save();});
-  $('background').onchange=()=>{livelyImage='';const value=$('background').value;if(value==='custom'&&!state.customImage){toast('Choose an image below first.');$('background').value=state.background;return;}update('background',value);};
+  $('background').onchange=()=>{const value=$('background').value;if(value==='custom'&&!state.customImage){toast('Choose an image below first.');$('background').value=state.background;return;}update('background',value);};
   for(const [id,key] of [['motion','motion'],['sound','sound'],['hour24','hour24'],['show-notes','showNotes']]) $(id).onchange=()=>update(key,$(id).checked);
   $('motion-shortcut').onclick=()=>update('motion',!state.motion);
   $('sound-shortcut').onclick=()=>update('sound',!state.sound);
@@ -120,7 +124,7 @@
   $('image-upload').onchange=async event=>{
     const file=event.target.files[0];if(!file)return;
     if(!['image/png','image/jpeg','image/webp'].includes(file.type)||file.size>2*1024*1024){toast('Choose a PNG, JPG or WebP smaller than 2 MB.');event.target.value='';return;}
-    const reader=new FileReader();reader.onerror=()=>toast('Could not read this image.');reader.onload=()=>{const image=new Image();image.onerror=()=>toast('This image could not be opened.');image.onload=()=>{livelyImage='';state.customImage=reader.result;update('background','custom');};image.src=reader.result;};reader.readAsDataURL(file);
+    const reader=new FileReader();reader.onerror=()=>toast('Could not read this image.');reader.onload=()=>{const image=new Image();image.onerror=()=>toast('This image could not be opened.');image.onload=()=>{state.customImage=reader.result;update('background','custom');};image.src=reader.result;};reader.readAsDataURL(file);
   };
   $('export').onclick=()=>{
     const blob=new Blob([JSON.stringify({version:1,...state},null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),link=document.createElement('a');
@@ -128,29 +132,18 @@
   };
   $('import').onchange=async event=>{
     const file=event.target.files[0];if(!file)return;
-    try {if(file.size>4*1024*1024)throw Error();const input=JSON.parse(await file.text());if(input.version!==1||!own(palettes,input.theme))throw Error();state=clean(input);livelyImage='';apply();renderCalendar();save();toast('Your little world, restored ♡');}catch{toast('Use a Petal OS settings export smaller than 4 MB.');}event.target.value='';
+    try {if(file.size>4*1024*1024)throw Error();const input=JSON.parse(await file.text());if(input.version!==1||!own(palettes,input.theme))throw Error();state=clean(input);apply();renderCalendar();save();toast('Your little world, restored ♡');}catch{toast('Use a Petal OS settings export smaller than 4 MB.');}event.target.value='';
   };
-  $('reset').onclick=()=>{state={...defaults,notes:{...state.notes}};livelyImage='';apply();save();toast('Appearance reset. Your calendar notes are kept.');};
+  $('reset').onclick=()=>{state={...defaults,notes:{...state.notes}};apply();save();toast('Appearance reset. Your calendar notes are kept.');};
   document.addEventListener('visibilitychange',()=>{document.body.classList.toggle('hidden-page',document.hidden);if(document.hidden&&audio)audio.suspend();if(!document.hidden)tick();});
-  /* Lively sends these controls on launch and whenever Customise changes.
-     They override matching browser-local values; communication is one-way. */
-  window.livelyPropertyListener=(name,value)=>{
-    if(name==='theme' && Number.isInteger(Number(value)) && Number(value)>=0 && Number(value)<3){state.theme=['rose','lavender','mint'][Number(value)];}
-    else if(name==='accent' && /^#[a-f\d]{6}$/i.test(value)) state.accent=value;
-    else if(name==='background' && Number.isInteger(Number(value)) && Number(value)>=0 && Number(value)<5) state.background=backgrounds[Number(value)];
-    else if(['label1','label2','label3','label4'].includes(name)) state[name]=String(value??'').slice(0,36);
-    else if(['motion','sound','hour24','showNotes'].includes(name) && typeof value==='boolean') state[name]=value;
-    else if(name==='volume' && Number.isFinite(Number(value))) state.volume=Math.max(0,Math.min(100,Number(value)));
-    else if(name==='customBackground') {
-      // Lively folderDropdown returns a relative path, not an arbitrary URL.
-      let path=typeof value==='string'?value.replace(/\\/g,'/').replace(/^\.\//,''):'';
-      if(path && !path.includes('/')) path='backgrounds/'+path;
-      if(/^backgrounds\/[^/\\:\x00-\x1f"?<>|]+\.(png|jpe?g|webp)$/i.test(path)) {livelyImage=path;}
-      else livelyImage='';
-    } else return;
-    apply();
-  };
   apply();renderCalendar();
+  // The native editor is the owner of desktop settings. Broadcasts update the
+  // wallpaper without re-posting, preventing an editor/wallpaper feedback loop.
+  window.petalHostLoad=value=>{
+    if(value!==null) state=clean(value);
+    apply();renderCalendar();
+    if(value===null && nativeEditor) window.chrome.webview.postMessage({type:'settings',state});
+  };
   if(!storageOK)$('storage-status').textContent='Storage could not be read. Export settings before closing.';
   setInterval(tick,1000);
 })();

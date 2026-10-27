@@ -1,0 +1,1 @@
+PETAL OS - Our own Windows wallpaper app. Extract Petal-OS-Desktop.zip and run PetalOS.exe, then click Apply wallpaper. No Lively required. This browser-only package previews the design: open index.html. Open README.html for the desktop app guide. Browser and desktop app settings are separate; Export / Import transfers them.
