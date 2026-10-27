@@ -89,3 +89,26 @@ Limits:
 - Browser, file URL and Lively storage are independent. No sync is claimed.
 - All designs are original geometric pixel artwork. No external asset or
   online service is required to run the extracted wallpaper.
+
+FOUR-UP UPDATE / Current revision
+The 56 assertions above are the original baseline. The four-zone update
+adds the following focused browser checks:
+PASS Four shortcut zones render
+PASS 2×2 zone arrangement at 1440px
+PASS Equal panel sizes at 1440px
+PASS Fits viewport at 1440px
+PASS 2×2 zone arrangement at 1366px
+PASS Equal panel sizes at 1366px
+PASS Fits viewport at 1366px
+PASS 2×2 zone arrangement at 1920px
+PASS Equal panel sizes at 1920px
+PASS Fits viewport at 1920px
+PASS 2×2 zone arrangement at 390px
+PASS Equal panel sizes at 390px
+PASS Fits viewport at 390px
+PASS Fourth label persists after reload
+PASS Fourth label exports and imports
+PASS Older exports receive fourth-label default
+PASS Older exports retain existing labels
+PASS Fourth Lively label callback works
+PASS No JavaScript errors in four-up layout

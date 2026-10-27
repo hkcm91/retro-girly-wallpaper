@@ -75,5 +75,10 @@
     "max": 100,
     "step": 1,
     "value": 20
+  },
+  "label4": {
+    "type": "textbox",
+    "text": "Zone 4 label",
+    "value": "sweet little extras"
   }
 }

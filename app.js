@@ -3,7 +3,7 @@
   'use strict';
   const $ = id => document.getElementById(id);
   const STORAGE_KEY = 'petal-os-v1';
-  const defaults = {theme:'rose',accent:'#b64e71',background:'gingham',customImage:'',label1:'daily little things',label2:'dreams in progress',label3:'just for fun',motion:!matchMedia('(prefers-reduced-motion: reduce)').matches,sound:false,hour24:false,showNotes:true,volume:20,notes:{}};
+  const defaults = {theme:'rose',accent:'#b64e71',background:'gingham',customImage:'',label1:'daily little things',label2:'dreams in progress',label3:'just for fun',label4:'sweet little extras',motion:!matchMedia('(prefers-reduced-motion: reduce)').matches,sound:false,hour24:false,showNotes:true,volume:20,notes:{}};
   const palettes = {
     rose:['#f6d6e0','#fff7f6','#f2b6ca','#633c50','#b96d89','#d899af','#b64e71'],
     lavender:['#e4dcf3','#faf7ff','#cdc0e6','#514364','#9a84b3','#b4a1ce','#80619f'],
@@ -20,7 +20,7 @@
     if (typeof input.accent === 'string' && /^#[a-f\d]{6}$/i.test(input.accent)) s.accent = input.accent;
     if (backgrounds.includes(input.background)) s.background = input.background;
     if (validImage(input.customImage)) s.customImage = input.customImage;
-    for (const key of ['label1','label2','label3']) if (typeof input[key] === 'string') s[key] = input[key].slice(0,36);
+    for (const key of ['label1','label2','label3','label4']) if (typeof input[key] === 'string') s[key] = input[key].slice(0,36);
     for (const key of ['motion','sound','hour24','showNotes']) if (typeof input[key] === 'boolean') s[key] = input[key];
     if (Number.isFinite(input.volume)) s.volume = Math.max(0,Math.min(100,input.volume));
     if (input.notes && typeof input.notes === 'object') for (const [key,value] of Object.entries(input.notes).slice(0,5000)) {
@@ -47,14 +47,14 @@
     const image = livelyImage || state.customImage;
     $('custom-bg').style.backgroundImage=state.background==='custom' && image ? `url("${image.replace(/["\\\n\r]/g,'')}")` : 'none';
     document.body.classList.toggle('paused',!state.motion);
-    for(let i=1;i<=3;i++) $('zone'+i+'-label').textContent=state['label'+i];
+    for(let i=1;i<=4;i++) $('zone'+i+'-label').textContent=state['label'+i];
     $('note-form').hidden=!state.showNotes;
     $('motion-shortcut').textContent=state.motion?'✧ Motion on':'✧ Motion off';
     $('motion-shortcut').setAttribute('aria-pressed',String(state.motion));
     $('sound-shortcut').textContent=state.sound?'♪ Sound on':'♪ Sound off';
     $('sound-shortcut').setAttribute('aria-pressed',String(state.sound));
     if(sync) {
-      for(const id of ['accent','background','label1','label2','label3','volume']) $(id).value=state[id];
+      for(const id of ['accent','background','label1','label2','label3','label4','volume']) $(id).value=state[id];
       for(const [id,key] of [['motion','motion'],['sound','sound'],['hour24','hour24'],['show-notes','showNotes']]) $(id).checked=state[key];
       document.querySelectorAll('[data-theme]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.theme===state.theme)));
     }
@@ -111,7 +111,7 @@
   $('today').onclick=()=>{selected=new Date();viewed=new Date(selected.getFullYear(),selected.getMonth(),1);renderCalendar();};
   $('note-form').onsubmit=event=>{event.preventDefault();const value=$('day-note').value.trim();if(value)state.notes[keyFor(selected)]=value;else delete state.notes[keyFor(selected)];save();renderCalendar();toast(value?'A little memory saved ♡':'Note cleared');};
   document.querySelectorAll('[data-theme]').forEach(button=>button.onclick=()=>{state.theme=button.dataset.theme;state.accent=palettes[state.theme][6];apply();save();});
-  for(const id of ['accent','label1','label2','label3','volume']) $(id).addEventListener('input',()=>{state[id]=id==='volume'?Number($(id).value):$(id).value;apply(false);save();});
+  for(const id of ['accent','label1','label2','label3','label4','volume']) $(id).addEventListener('input',()=>{state[id]=id==='volume'?Number($(id).value):$(id).value;apply(false);save();});
   $('background').onchange=()=>{livelyImage='';const value=$('background').value;if(value==='custom'&&!state.customImage){toast('Choose an image below first.');$('background').value=state.background;return;}update('background',value);};
   for(const [id,key] of [['motion','motion'],['sound','sound'],['hour24','hour24'],['show-notes','showNotes']]) $(id).onchange=()=>update(key,$(id).checked);
   $('motion-shortcut').onclick=()=>update('motion',!state.motion);
@@ -138,7 +138,7 @@
     if(name==='theme' && Number.isInteger(Number(value)) && Number(value)>=0 && Number(value)<3){state.theme=['rose','lavender','mint'][Number(value)];}
     else if(name==='accent' && /^#[a-f\d]{6}$/i.test(value)) state.accent=value;
     else if(name==='background' && Number.isInteger(Number(value)) && Number(value)>=0 && Number(value)<5) state.background=backgrounds[Number(value)];
-    else if(['label1','label2','label3'].includes(name)) state[name]=String(value??'').slice(0,36);
+    else if(['label1','label2','label3','label4'].includes(name)) state[name]=String(value??'').slice(0,36);
     else if(['motion','sound','hour24','showNotes'].includes(name) && typeof value==='boolean') state[name]=value;
     else if(name==='volume' && Number.isFinite(Number(value))) state.volume=Math.max(0,Math.min(100,Number(value)));
     else if(name==='customBackground') {

@@ -18,7 +18,7 @@ A little space to bloom: a self-contained interactive Windows wallpaper for Live
 - Live local clock and date, with 12/24-hour display.
 - Interactive calendar with local date notes, month navigation and Today.
 - Animated pixel hearts, sparkles and a bow; motion toggle and reduced-motion support.
-- Three editable desktop-zone labels.
+- Four equal desktop zones in a 2×2 grid, each with an editable label.
 - Rose, lavender and mint palettes, custom accent color, four built-in background styles and image upload.
 - Optional soft click sounds with volume control; sound is off by default.
 - Local settings persistence and JSON export/import, including notes and uploaded image.
@@ -36,7 +36,7 @@ See the [official Lively interaction guide](https://github.com/rocksdanister/liv
 
 ## Verification
 
-40 local browser assertions and 16 public-preview assertions passed, including persistence, settings transfer, offline file loading, midnight/year rollover, leap day, responsive layouts and Lively callback handling. ZIP integrity and icon resolutions were checked. Actual Lively import, desktop input routing and audible output still require a check in Lively. Details: [TEST-RESULTS.txt](TEST-RESULTS.txt).
+The original baseline passed 40 local browser assertions and 16 public-preview assertions, including persistence, settings transfer, offline file loading, midnight/year rollover, leap day, responsive layouts and Lively callback handling. The four-up update passed 19 focused checks for equal 2×2 panels, responsive sizing, the fourth label, old exports and Lively callbacks. ZIP integrity and icon resolutions were checked. Actual Lively import, desktop input routing and audible output still require a check in Lively. Details: [TEST-RESULTS.txt](TEST-RESULTS.txt).
 
 ## GitHub Pages
 
