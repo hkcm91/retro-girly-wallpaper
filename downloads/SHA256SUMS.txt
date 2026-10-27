@@ -1,3 +1,3 @@
-e0ef566b6e8c6c2f68dc36296cfe91560726a0e9e5e814beb8be4bc4bccc2ecf  Petal-OS-Offline.zip
-9f6069ded4cb3e5a15d42a8a497067d48e4667f2c97634d6a5e78df573fb177a  Petal-OS-Lively.zip
+d4aaef9d8e3fdfe220b6ca3841eec536901cd1c63d2969a67d90fcabf8f2af30  Petal-OS-Offline.zip
+f5749de10952d100029bc0e74e4d3751c7a04628e7f32e64a10859b237a74b5a  Petal-OS-Lively.zip
 25f37b7a616cae3759128aa106d002be6e24538dfd768006ed17e16a8573a981  Petal-OS-Icons.zip

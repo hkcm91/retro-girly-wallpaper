@@ -5,7 +5,7 @@ Environment: Chromium through Playwright CLI on Windows.
 Browser testing used a local HTTP preview and a direct file URL with
 networking disabled. No external requests were observed on reload.
 
-RESULT: 40 browser assertions passed. JavaScript syntax check passed.
+RESULT: 56 browser assertions passed. JavaScript syntax check passed.
 Visual review: 1440x1000, 1366x768, 1920x1080 and 390px mobile preview,
 plus the settings panel and icon contact sheet. Desktop layouts fit the
 viewport at the tested sizes; mobile preview scrolls vertically.
@@ -51,6 +51,22 @@ PASS Lively note visibility control
 PASS Lively 24-hour control
 PASS Lively sound control
 PASS No external network requests
+PASS Public GitHub Pages responds HTTP 200
+PASS Published wallpaper renders
+PASS Hosted labels editable
+PASS Hosted settings persist
+PASS Hosted calendar note saves
+PASS Published asset: style.css
+PASS Published asset: app.js
+PASS Published asset: LivelyInfo.json
+PASS Published asset: LivelyProperties.json
+PASS Published asset: icons/heart.ico
+PASS Published asset: backgrounds/rose-gingham.png
+PASS Published asset: README.html
+PASS Published asset: downloads/Petal-OS-Offline.zip
+PASS Published asset: downloads/Petal-OS-Lively.zip
+PASS Published asset: downloads/Petal-OS-Icons.zip
+PASS No hosted JavaScript errors
 
 Package checks:
 - Every local HTML asset/link target exists.
@@ -66,8 +82,10 @@ Limits:
   Property callbacks were exercised directly in Chromium.
 - Sound toggle and audio code executed without JavaScript errors; audible
   output and player autoplay policy need a listening check in Lively.
-- GitHub Pages was not deployed: no suitable wallpaper repository was
-  identified or chosen. The included guide explains root/subfolder hosting.
+- GitHub Pages is published at https://hkcm91.github.io/retro-girly-wallpaper/
+  Source: https://github.com/hkcm91/retro-girly-wallpaper
+  Public controls, persistence, calendar notes, assets and downloads passed
+  16 additional assertions. The original local suite has 40 assertions.
 - Browser, file URL and Lively storage are independent. No sync is claimed.
 - All designs are original geometric pixel artwork. No external asset or
   online service is required to run the extracted wallpaper.

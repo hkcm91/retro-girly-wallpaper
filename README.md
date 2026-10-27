@@ -36,7 +36,7 @@ See the [official Lively interaction guide](https://github.com/rocksdanister/liv
 
 ## Verification
 
-40 browser assertions passed, including persistence, settings transfer, offline file loading, midnight/year rollover, leap day, responsive layouts and Lively callback handling. ZIP integrity and icon resolutions were checked. Actual Lively import, desktop input routing and audible output still require a check in Lively. Details: [TEST-RESULTS.txt](TEST-RESULTS.txt).
+40 local browser assertions and 16 public-preview assertions passed, including persistence, settings transfer, offline file loading, midnight/year rollover, leap day, responsive layouts and Lively callback handling. ZIP integrity and icon resolutions were checked. Actual Lively import, desktop input routing and audible output still require a check in Lively. Details: [TEST-RESULTS.txt](TEST-RESULTS.txt).
 
 ## GitHub Pages
 
